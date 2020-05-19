@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 import xgboost as xgb
 from sklearn.ensemble import AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC 
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import PolynomialFeatures
 import itertools
 
@@ -48,17 +48,12 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix'
 
 def classification_models(X,y,models,test_size = .2,random_state = 13,params=None,grid=False,param_grid=None,cv=5):
     '''Creates models from given input and returns a table of evaluation metrics for each model.'''
-    #create scaler
-    # scaler = MinMaxScaler()
-    # scaler.fit(X)
     #dictionary of models
     model_dict = {'logistic': LogisticRegression,'knn': KNeighborsClassifier,
                  'tree': DecisionTreeClassifier,'rf': RandomForestClassifier,
                  'xgb': xgb.XGBClassifier, 'AdaBoost': AdaBoostClassifier,
                  'GrdBoost': GradientBoostingClassifier, 'svc': SVC,
-                 'Bayes': GaussianNB}
-    #scale data
-    # X_transformed = scaler.transform(X)
+                 'Bayes': MultinomialNB}
     #split data into train and test
     X_train, X_test, y_train, y_test = train_test_split(X, y,test_size = test_size, random_state=random_state)
     #create evaluation metrics table
