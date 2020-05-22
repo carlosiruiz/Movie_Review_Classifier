@@ -24,7 +24,7 @@ Sources: IMDB & Rotten Tomatoes
 
 ## Business Case <a id='case'></a>
 
-My goal with this project is to build a sentiment classifier on movie reviews scraped from Rotten Tomatoes. This is a common NLP task, and a good way to practice working with text data.
+My goal with this project is to use movie review data scraped from Rotten Tomatoes to build a sentiment classifier. This is a common NLP task, and a good way to practice working with text data. 
 
 ## Libraries Used <a id='lib'></a>
 
