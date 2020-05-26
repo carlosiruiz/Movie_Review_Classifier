@@ -25,7 +25,7 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix'
     cm -- Confusion matrix to plot; Confusion Matrix
     classes -- Classes of the confusion matrix; List of Strings
     normalize -- Wheteher to apply normalization or not; Bool, default = False
-    title -- Title of plot; String, default = "Confusion Matrix"
+    title -- Title of plot. Also used as file name; String, default = "Confusion Matrix"
     cmap -- Colormap to apply to confusion matrix; Colormap, default = plt.cm.Blues
     """
     if normalize:
@@ -54,7 +54,7 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix'
     plt.tight_layout()
     plt.ylabel('True Label', weight='bold')
     plt.xlabel('Predicted Label', weight='bold')
-    plt.show()
+    plt.savefig(f'../Images/{title.replace(" ","_")}.png')
 
 def classification_models(X, y, models, test_size = 0.2, random_state = 13, 
     params=None, grid=False, param_grid=None, cv=5):
@@ -110,7 +110,6 @@ def classification_models(X, y, models, test_size = 0.2, random_state = 13,
     i = 0
     #if no params given and gridsearch is false, create base models
     if (params==None) & (grid == False):
-        print('In base model if block') #debug
         for model in models:
             for key, value in model_dict.items(): 
                 if model == key: 
@@ -157,5 +156,4 @@ def classification_models(X, y, models, test_size = 0.2, random_state = 13,
                    'Recall': metrics.recall_score(y_test, y_pred),
                    'Precision': metrics.precision_score(y_test, y_pred), 
                    'F1': metrics.f1_score(y_test, y_pred)},ignore_index=True)
-                    print("params")
     return summary_df
