@@ -110,6 +110,7 @@ def classification_models(X, y, models, test_size = 0.2, random_state = 13,
     i = 0
     #if no params given and gridsearch is false, create base models
     if (params==None) & (grid == False):
+        print('In base model if block') #debug
         for model in models:
             for key, value in model_dict.items(): 
                 if model == key: 
@@ -129,7 +130,7 @@ def classification_models(X, y, models, test_size = 0.2, random_state = 13,
             for key, value in model_dict.items(): 
                 if model == key: 
                     model_use = GridSearchCV(estimator = value(), 
-                        param_grid = param_grid[i], cv = cv)
+                        param_grid = param_grid[i], cv = cv, verbose=1)
                     model_use.fit(X_train,y_train)
                     model_grid = value(**model_use.best_params_)
                     model_grid.fit(X_train,y_train)
