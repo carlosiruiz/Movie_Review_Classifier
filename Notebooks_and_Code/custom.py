@@ -43,13 +43,11 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix'
 
     fmt = '.2f' if normalize else 'd'
     thresh = cm.max() / 2.
+
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        if i == 0:
-            plt.text(j-0.1, i+0.3, format(cm[i, j], fmt), 
-                color="white" if cm[i, j] > thresh else "black")
-        if i == 1:
-            plt.text(j-0.1, i-0.2, format(cm[i, j], fmt), 
-                color="white" if cm[i, j] > thresh else "black")
+        plt.text(j, i, format(cm[i, j], fmt),
+        horizontalalignment="center",
+        color="white" if cm[i, j] > thresh else "black")
 
     plt.tight_layout()
     plt.ylabel('True Label', weight='bold')
@@ -157,3 +155,44 @@ def classification_models(X, y, models, test_size = 0.2, random_state = 13,
                    'Precision': metrics.precision_score(y_test, y_pred), 
                    'F1': metrics.f1_score(y_test, y_pred)},ignore_index=True)
     return summary_df
+
+def generate_confusion_indices(y_true, y_pred):
+    """
+    Returns lists of indexes of data classified as TP, TN, FP, or FN.
+
+    Parameters:
+    y_true -- Ground truth (correct) target values; array-like
+    y_pred -- Estimated targets as returned by a classifier; array-like
+
+    Returns:
+    true_positives -- List of indexes of data classified correctly as class 1.
+    true_negatives -- List of indexes of data classified correctly as class 0.
+    false_positives -- List of indexes of data classified incorrectly as class 1.
+    false_negatives -- List of indexes of data classified incorrectly as class 0.
+    """
+    true_vs_pred = list(zip(y_true, y_pred))
+    
+    #initialize counter
+    i = 0                # (truth, pred)
+    true_positives = []  # (1, 1)
+    true_negatives = []  # (0 ,0)
+    false_positives = [] # (0, 1)
+    false_negatives = [] # (1, 0)
+    
+    for pair in true_vs_pred:
+        if pair[0] == 1 and pair[1] == 1:
+            true_positives.append(i)
+        if pair[0] == 0 and pair[1] == 0:
+            true_negatives.append(i)
+        if pair[0] == 0 and pair[1] == 1:
+            false_positives.append(i)
+        if pair[0] == 1 and pair[1] == 0:
+            false_negatives.append(i)
+        i += 1
+    
+    print('True positives:', len(true_positives))
+    print('True negatives:', len(true_negatives))
+    print('False positives:', len(false_positives))
+    print('False negatives:', len(false_negatives))
+    
+    return true_positives, true_negatives, false_positives, false_negatives
