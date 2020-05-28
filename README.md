@@ -47,12 +47,17 @@ This project uses the following python libraries.
 * string
 * wordcloud
 * numpy
+* scipy
+* pickle
+* custom
 
 #### Modeling
 
 * pandas
 * matplotlib
 * sklearn
+* scipy
+* pickle
 * custom
 
 #### Custom Functions
